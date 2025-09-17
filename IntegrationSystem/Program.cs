@@ -3,11 +3,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using EasyModbus;                      // EasyModbusTCP.NET
+using EasyModbus;                      
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using ITSystem.Data;                   // ShopDbContext (från ITSystem-projektet)
-using ITSystem.Models;                 // Order
+using ITSystem.Data;                   
+using ITSystem.Models;                 
 
 
 namespace IntegrationSystem
@@ -18,7 +18,7 @@ namespace IntegrationSystem
         {
             try
             {
-                // 1) Läs konfiguration
+                
                 var cfg = new ConfigurationBuilder()
                     .SetBasePath(AppContext.BaseDirectory)
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -35,15 +35,15 @@ namespace IntegrationSystem
                 var batch = int.TryParse(cfg["Integration:BatchSize"], out var b) ? b : 100;
                 var stateFile = cfg["Integration:StateFile"] ?? "last.txt";
 
-                // 2) Förbered DB options
+               
                 var dbOptions = new DbContextOptionsBuilder<ShopDbContext>()
                     .UseSqlServer(connStr)
                     .Options;
 
-                // 3) Förbered Modbus-klient
+                
                 var client = new ModbusClient(host, port) { UnitIdentifier = unitId };
 
-                // Ctrl+C stänger snyggt
+                
                 var stopping = false;
                 Console.CancelKeyPress += (s, e) =>
                 {
@@ -52,7 +52,6 @@ namespace IntegrationSystem
                     Console.WriteLine("Avslutar... (Ctrl+C)");
                 };
 
-                // Hämta senast skickade orderId från state-fil
                 int last = ReadLast(stateFile);
 
                 Console.WriteLine($"Integration startad. Lyssnar på nya ordrar > {last}. " +
@@ -60,7 +59,7 @@ namespace IntegrationSystem
 
                 while (!stopping)
                 {
-                    // 4) Se till att vi är anslutna (retry om ot-systemet inte hunnit upp)
+                  
                     if (!client.Connected)
                     {
                         try
@@ -78,7 +77,7 @@ namespace IntegrationSystem
 
                     try
                     {
-                        // 5) Läs NYA ordrar (> last) och skicka
+                        
                         using var db = new ShopDbContext(dbOptions);
                         var newOrders = db.Orders
                             .AsNoTracking()
@@ -96,7 +95,7 @@ namespace IntegrationSystem
 
                         foreach (var o in newOrders)
                         {
-                            int value = o.Id & 0xFFFF; // holding register är 16-bit
+                            int value = o.Id & 0xFFFF; 
                             client.WriteSingleRegister(reg, value);
                             Console.WriteLine($"Order har skapats för {o.CustomerName} med order Id {o.Id}. Skickas till OT → HR[{reg}].");
 
@@ -108,7 +107,7 @@ namespace IntegrationSystem
                     catch (Exception ex)
                     {
                         Console.WriteLine($"[Fel] {ex.Message}");
-                        // Om anslutning dött, stäng och försök koppla upp igen
+                        
                         if (client.Connected)
                         {
                             try { client.Disconnect(); } catch { /* ignore */ }

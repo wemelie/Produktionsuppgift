@@ -31,10 +31,7 @@ namespace ITSystem
                   })
                   .ConfigureLogging(logging =>
                   {
-                      // (valfritt) ta bort alla providers om du vill ha total tystnad
-                      //logging.ClearProviders();
-
-                      // Stäng AV EF Core-loggarna helt
+                     
                       logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.None);
                       logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
                   })

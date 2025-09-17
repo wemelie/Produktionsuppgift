@@ -13,7 +13,7 @@ namespace ITSystem.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string CustomerName { get; set; } = "";
 
-        // Navigation
+        
         public List<OrderItem> Items { get; set; } = new();
     }
 }
