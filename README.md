@@ -1,31 +1,44 @@
 IT-system: Orderhantering
+Detta är ett konsolprogram skrivet i C# som hanterar produkter och ordrar i en SQL Server-databas med hjälp av Entity Framework Core.
+Funktioner
 
-Ett konsolprogram i C# som hanterar produkter och ordrar i en SQL-databas med hjälp av Entity Framework Core.
-
-Menyval
+När du startar programmet visas en meny:
 
 1. Lista produkter – visar alla produkter i databasen
 
-2. Skapa ny order – lägger till en ny order
+2. Skapa ny order – lägger till en ny order baserad på produkter
 
-3. Lista ordrar – visar alla ordrar
+3. Lista ordrar – visar alla ordrar och orderrader
 
 0. Avsluta – stänger programmet
 
 Databas
+Programmet använder en SQL-databas som skapas via Entity Framework Core Migrations. Följande tabeller finns:
+Products – lagrar produkter
+Orders – lagrar orderhuvuden
+OrderItems – lagrar orderrader kopplade till ordrar
 
-Products – produkter
+När programmet körs första gången fylls databasen automatiskt med 10 standardprodukter.
 
-Orders – ordrar
+Kom igång:
 
-OrderItems – rader i en order
+1.Klona projektet
+git clone https://github.com/wemelie/Produktionsuppgift.git
 
-När programmet startar fylls databasen automatiskt med 10 produkter.
+2.Kontrollera connection string
+Öppna appsettings.json och se till att connection string fungerar på din dator.
+Rekommenderad för Visual Studio (LocalDB):
+"DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=MyProduction;Trusted_Connection=True;"
 
-Kom igång
+3.Skapa databasen
 
-Ändra connection string i appsettings.json om det behövs.
+4.Öppna Package Manager Console i Visual Studio och kör:
+Update-Database
 
-Kör Update-Database i Package Manager Console för att skapa databasen.
+5.Starta programmet
+Kör projektet (F5). Menyn visas i konsolfönstret.
 
-Starta programmet (F5) och använd menyn.
+Tekniker:
+C# .NET Console Application
+Entity Framework Core
+SQL Server / LocalDB
