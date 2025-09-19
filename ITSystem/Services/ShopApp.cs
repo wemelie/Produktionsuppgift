@@ -26,7 +26,7 @@ namespace ITSystem.Services
            
             var wanted = new List<Product>
     {
-       new Product { Name = "Laptop", Description = "Gaming Laptop", Price = 7000 },
+         new Product { Name = "Laptop", Description = "Gaming Laptop", Price = 7000 },
                   new Product { Name = "Iphone 17", Description = "Smartphone", Price = 12000 },
                   new Product { Name = "Gaming chair", Description = "Comfortable", Price = 2000 },
                   new Product { Name = "Laptop 13.3 inch ", Description = "Good", Price = 15000 },
@@ -35,7 +35,7 @@ namespace ITSystem.Services
                   new Product { Name = "Keyboard", Description = "Keyboard with RGB", Price = 1200 },
                   new Product { Name = "Computer mouse", Description = "Noise free", Price = 500 },
                   new Product { Name = "LG QNED88", Description = "55 INCH TV", Price = 6000 },
-                  new Product { Name = "Jabra headphone", Description = "noise cancelling", Price = 1500 }
+                  new Product { Name = "Jabra headphone", Description = "noise cancelling", Price = 1500 } //produkter till databasen
     };
 
             

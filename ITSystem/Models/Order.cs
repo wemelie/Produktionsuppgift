@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ITSystem.Models
 {
-    public class Order
+    public class Order // Klass som representerar en kundorder i systemet
     {
         public int Id { get; set; }
 
